@@ -11,13 +11,7 @@
 
     hEqn.relax();
 
-    eqnResidual = hEqn.solve().initialResidual();
-    maxResidual = max(eqnResidual, maxResidual);
+    hEqn.solve().initialResidual();
 
     thermo.correct();
-
-    rho = thermo.rho();
-    //rho = max(rho, rhoMin);
-    //rho = min(rho, rhoMax);
-    rho.relax();
 }

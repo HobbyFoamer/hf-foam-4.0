@@ -13,7 +13,7 @@ else
 phi = fvc::interpolate(rho*U) & mesh.Sf();
 bool closedVolume = adjustPhi(phi, U, p);
 
-for (int nonOrth=0; nonOrth<=nNonOrthCorr; nonOrth++)
+while (simple.correctNonOrthogonal())
 {
     tmp<fvScalarMatrix> tpEqn;
 
@@ -27,18 +27,10 @@ for (int nonOrth=0; nonOrth<=nNonOrthCorr; nonOrth++)
     }
 
     tpEqn().setReference(pRefCell, pRefValue);
-    // retain the residual from the first iteration
-    if (nonOrth == 0)
-    {
-        eqnResidual = tpEqn().solve().initialResidual();
-        maxResidual = max(eqnResidual, maxResidual);
-    }
-    else
-    {
-        tpEqn().solve();
-    }
 
-    if (nonOrth == nNonOrthCorr)
+    tpEqn().solve();
+
+    if (simple.finalNonOrthogonalIter())
     {
         phi -= tpEqn().flux();
     }
@@ -88,8 +80,6 @@ if (closedVolume)
 if (nCorr == nCorrMax - 1)
 {
     rho = thermo.rho();
-    //rho = max(rho, rhoMin);
-    //rho = min(rho, rhoMax);
     rho.relax();
     Info<< "rho max/min : " << max(rho).value() << " " << min(rho).value() << endl;
 }

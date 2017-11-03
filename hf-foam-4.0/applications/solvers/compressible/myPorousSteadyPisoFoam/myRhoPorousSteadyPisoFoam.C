@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------*\
 
 Application
-    myRhoPorousSimpleFoam
+    myRhoPorousSteadyPisoFoam
 
 Description
     Steady-state solver for turbulent flow of compressible fluids with
@@ -39,8 +39,16 @@ int main(int argc, char *argv[])
         // Pressure-velocity SIMPLE corrector
         {
             #include "UEqn.H"
+			
+            int nCorrMax = 2;
+            for(int nCorr = 0; nCorr < nCorrMax; nCorr++)
+            {
+                #include "pEqn.H"
+            }
+			
             #include "hEqn.H"
-            #include "pEqn.H"
+			
+			UEqn.clear();
         }
 
         turbulence->correct();
