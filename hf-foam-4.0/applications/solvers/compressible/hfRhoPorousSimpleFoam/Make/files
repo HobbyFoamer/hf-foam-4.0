@@ -1,0 +1,3 @@
+hfRhoPorousSimpleFoam.C
+
+EXE = $(FOAM_APPBIN)/hfRhoPorousSimpleFoam
