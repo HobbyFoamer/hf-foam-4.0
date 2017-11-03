@@ -29,10 +29,12 @@ SMART, modified SMART, VONOS, modified VONOS, WACEB
 http://hobbyfoam.blogspot.jp/2016/03/smart-bounded-quick-scheme-for-openfoam.html
         
 ## Solvers
-* Steady-state PISO solver for turbulent flow of compressible fluids with RANS  
+* hfRhoPorousSteadyPisoFoam  
+Steady-state PISO solver for turbulent flow of compressible fluids with RANS  
 turbulence modelling, and implicit or explicit porousity treatment.
         
-* Steady-state SIMPLE solver for turbulent flow of compressible fluids with RANS  
+* hfRhoPorousSimpleFoam  
+Steady-state SIMPLE solver for turbulent flow of compressible fluids with RANS  
 turbulence modelling, and implicit or explicit porousity treatment.
 
 # Tutorials
