@@ -1,0 +1,3 @@
+myPorousSteadyPisoFoam.C
+
+EXE = $(FOAM_APPBIN)/myPorousSteadyPisoFoam
