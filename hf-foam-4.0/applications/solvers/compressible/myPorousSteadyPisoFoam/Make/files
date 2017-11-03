@@ -1,3 +1,0 @@
-myRhoPorousSteadyPisoFoam.C
-
-EXE = $(FOAM_APPBIN)/myRhoPorousSteadyPisoFoam
