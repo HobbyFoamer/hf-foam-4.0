@@ -16,11 +16,12 @@ http://hobbyfoam.blogspot.jp/2015/05/compressibility-correction-for-spalart.html
 * Negative SA model and New Expression of Stilda  
 http://hobbyfoam.blogspot.jp/2015/05/negative-spalart-allmaras-compressible.html
         
-## mutSAWallFunction
+## Wall Functions
+* mutSAWallFunction  
 Wall funcion based on the analitical solution of SA model.  
 http://hobbyfoam.blogspot.jp/2016/07/i-implemented-new-wall-function-for-mut.html
         
-## nuTildaWallFunction
+* nuTildaWallFunction  
 Wall function of nuTilda in which nuTilda is calculated from mut on the face.  
 http://hobbyfoam.blogspot.jp/2015/09/wall-function-for-nutilda.html
 
