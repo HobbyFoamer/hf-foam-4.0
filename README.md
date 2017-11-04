@@ -1,5 +1,5 @@
 # Installation
-Just merge src and applications directories to $FOAM_INST_DIR/foam-extend-4.0 and then
+Just merge src, applications and tutorials directories to $FOAM_INST_DIR/foam-extend-4.0 and then
 rebuild fe40.
 
 # Additional Codes
