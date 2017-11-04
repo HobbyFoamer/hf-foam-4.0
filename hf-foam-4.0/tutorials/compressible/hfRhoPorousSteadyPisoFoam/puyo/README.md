@@ -14,7 +14,7 @@ $ snappyHexMesh -overwrite
 $ source ~/foam/foam-extend-4.0/etc/bashrc  
 $ ./Allrun  
 
-# Cleanup
+## Cleanup
 $ ./Allclean
 
 # Original STL Data
