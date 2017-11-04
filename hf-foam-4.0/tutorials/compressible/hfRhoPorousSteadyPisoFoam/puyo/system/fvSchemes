@@ -1,0 +1,67 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSchemes;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+ddtSchemes
+{
+    default         steadyState;
+}
+
+gradSchemes
+{
+    default         cellLimited Gauss linear 1;
+}
+
+divSchemes
+{
+    default         none;
+    div(phi,U)      Gauss VONOSVDC; 
+    div(phi,nuTilda) Gauss WACEBDC;
+
+    div((muEff*dev2(T(grad(U))))) Gauss linear;
+    div((grad(p)|A(U))) Gauss linear;
+    div(U)          Gauss linear;
+
+    div(phi,Sxx)    Gauss linear;
+    div(phi,Sxy)    Gauss linear;
+    div(phi,Sxz)    Gauss linear;
+    div(phi,Syx)    Gauss linear;
+    div(phi,Syy)    Gauss linear;
+    div(phi,Syz)    Gauss linear;
+    div(phi,Szx)    Gauss linear;
+    div(phi,Szy)    Gauss linear;
+    div(phi,Szz)    Gauss linear;
+
+    div(U,p)        Gauss linear;
+    div(phi,h)      Gauss WACEBDC;
+}
+
+laplacianSchemes
+{
+    default         Gauss linear limited 0.5;
+}
+
+interpolationSchemes
+{
+    default         linear;
+}
+
+snGradSchemes
+{
+    default         limited 0.5;
+}
+
+fluxRequired
+{
+    default         no;
+    p               ;
+}
+
+
+// ************************************************************************* //

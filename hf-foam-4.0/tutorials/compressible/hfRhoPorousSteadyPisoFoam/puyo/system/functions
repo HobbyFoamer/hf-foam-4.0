@@ -1,0 +1,35 @@
+functions
+{
+  fieldMinMax
+  {
+    type               fieldMinMax;
+    functionObjectLibs ("libfieldFunctionObjects.so");
+    enabled            true;
+    outputControl      timeStep;
+    outputInterval     1;
+    log                true;
+    mode               magnitude;
+    fields
+    (
+      U p nuTilda
+    );
+  }
+
+  forces
+  {
+      type                forces;
+      functionObjectLibs  ("libforces.so");
+      outputControl       timeStep;
+      outputInterval      1;
+     
+      patches             ("puyo.*");
+      pName               p;
+      UName               U;
+      pRef                101325;
+      rhoName             rho;
+      rhoInf              1.225;
+      log                 true;
+     
+      CofR                (0 0 0);
+  }
+}

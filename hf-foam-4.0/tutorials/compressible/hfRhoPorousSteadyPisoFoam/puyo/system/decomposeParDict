@@ -1,0 +1,19 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      decomposeParDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+numberOfSubdomains 8;
+
+method             metis; //scotch;
+
+metisCoeffs //scotchCoeffs
+{
+    processorWeights ( 1 1 1 1 1 1 1 1 );
+}
+
+// ************************************************************************* //

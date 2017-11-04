@@ -1,0 +1,17 @@
+#!/bin/sh
+
+\echo 'Removing decomposed files'
+\rm -r processor*
+
+\echo 'Removing reconstructed results'
+\rm -r *00
+
+\echo 'Removing function objects log files'
+\rm -r forces fieldMinMax
+
+\echo 'Removing log files'
+\rm log.*
+
+\echo 'Removing mesh'
+\rm -r constant/polyMesh
+\gzip constant/triSurface/puyo_LOW.stl

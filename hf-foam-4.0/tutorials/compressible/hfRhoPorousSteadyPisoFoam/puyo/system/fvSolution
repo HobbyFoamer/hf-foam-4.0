@@ -1,0 +1,71 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSolution;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solvers
+{
+    "rho.*"
+    {
+        solver          diagonal;
+    }
+
+    "p.*"
+    {
+        solver          PCG;
+        preconditioner  Cholesky;
+
+        tolerance       1e-9;
+        relTol          1e-3;
+
+        minIter         50;
+        maxIter         1000;
+    }
+
+    "U.*"
+    {
+        solver           GMRES;
+        preconditioner   ILU0;
+        nDirections      5;
+
+        tolerance        1e-9;
+        relTol           0;
+
+        minIter          3;
+        maxIter          50;
+    }
+
+    "h.*"
+    {
+        $U;
+    }
+
+    "nuTilda.*"
+    {
+        $U;
+    }
+}
+
+SIMPLE
+{
+    nNonOrthogonalCorrectors 0;
+    pMin            pMin   [1 -1 -2 0 0] 85000;
+}
+
+relaxationFactors
+{
+    p                 0.0; // just for avoiding error
+    p0                0.3; // rFactor for the first PISO loop
+    p1                0.3; // rFactor for the second PISO loop
+    U                 0.7;
+    h                 0.5;
+    nuTilda           0.7;
+}
+
+
+// ************************************************************************* //
