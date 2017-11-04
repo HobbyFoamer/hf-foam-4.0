@@ -13,3 +13,9 @@ $ snappyHexMesh -overwrite
 ## Source foam-extend-4.0 (hf-foam-4.0 merged) etc/bashrc and run the case
 $ source ~/foam/foam-extend-4.0/etc/bashrc  
 $ ./Allrun  
+
+# Cleanup
+$ ./Allclean
+
+# Original STL Data
+http://honda-3d.com/
