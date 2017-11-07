@@ -44,7 +44,7 @@ string rFacs[2] = {"p0", "p1"};
 // except the final loop
 if (nCorr != nCorrMax - 1)
 {
-    p.relax(mesh.solutionDict().relaxationFactor(rFacs[nCorr]));
+    p.relax(mesh.solutionDict().fieldRelaxationFactor(rFacs[nCorr]));
     p.correctBoundaryConditions();
 }
 
@@ -63,7 +63,7 @@ U.correctBoundaryConditions();
 // in case of the final loop
 if (nCorr == nCorrMax - 1)
 {
-    p.relax(mesh.solutionDict().relaxationFactor(rFacs[nCorr]));
+    p.relax(mesh.solutionDict().fieldRelaxationFactor(rFacs[nCorr]));
     p.correctBoundaryConditions();
 }
 
