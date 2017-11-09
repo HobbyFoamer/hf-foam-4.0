@@ -93,6 +93,9 @@ namespace Foam
 {
 namespace compressible
 {
+
+    wordList boundaryList(const volVectorField& U);
+	
 namespace RASModels
 {
 

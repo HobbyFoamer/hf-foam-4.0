@@ -7,6 +7,7 @@
 #include "fvcDdt.H"
 
 #include "backwardsCompatibilityWallFunctions.H"
+#include "fixedValueFvPatchFields.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -14,6 +15,26 @@ namespace Foam
 {
 namespace compressible
 {
+
+wordList boundaryList(const volVectorField& U)
+{
+    wordList SBCTypes
+    (
+        U.boundaryField().size(),
+        fixedValueFvPatchScalarField::typeName
+    );
+
+    forAll(U.boundaryField(), patchi)
+    {
+        if (U.boundaryField()[patchi].fixesValue())
+        {
+            SBCTypes[patchi] = zeroGradientFvPatchScalarField::typeName;
+        }
+    }
+	
+    return SBCTypes;
+}
+
 namespace RASModels
 {
 
@@ -434,7 +455,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         ),
         mesh_,
         dimensionedScalar("Sxx", dimensionSet(0, 0, -1, 0, 0, 0, 0), 0),
-        zeroGradientFvPatchScalarField::typeName
+        boundaryList(U_)
     ),
 
     Sxy_
@@ -449,7 +470,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         ),
         mesh_,
         dimensionedScalar("Sxy", dimensionSet(0, 0, -1, 0, 0, 0, 0), 0),
-        zeroGradientFvPatchScalarField::typeName
+        boundaryList(U_)
     ),
 
     Sxz_
@@ -464,7 +485,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         ),
         mesh_,
         dimensionedScalar("Sxz", dimensionSet(0, 0, -1, 0, 0, 0, 0), 0),
-        zeroGradientFvPatchScalarField::typeName
+        boundaryList(U_)
     ),
 
     Syx_
@@ -479,7 +500,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         ),
         mesh_,
         dimensionedScalar("Syx", dimensionSet(0, 0, -1, 0, 0, 0, 0), 0),
-        zeroGradientFvPatchScalarField::typeName
+        boundaryList(U_)
     ),
 
     Syy_
@@ -494,7 +515,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         ),
         mesh_,
         dimensionedScalar("Syy", dimensionSet(0, 0, -1, 0, 0, 0, 0), 0),
-        zeroGradientFvPatchScalarField::typeName
+        boundaryList(U_)
     ),
 
     Syz_
@@ -509,7 +530,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         ),
         mesh_,
         dimensionedScalar("Syz", dimensionSet(0, 0, -1, 0, 0, 0, 0), 0),
-        zeroGradientFvPatchScalarField::typeName
+        boundaryList(U_)
     ),
 
     Szx_
@@ -524,7 +545,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         ),
         mesh_,
         dimensionedScalar("Szx", dimensionSet(0, 0, -1, 0, 0, 0, 0), 0),
-        zeroGradientFvPatchScalarField::typeName
+        boundaryList(U_)
     ),
 
     Szy_
@@ -539,7 +560,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         ),
         mesh_,
         dimensionedScalar("Szy", dimensionSet(0, 0, -1, 0, 0, 0, 0), 0),
-        zeroGradientFvPatchScalarField::typeName
+        boundaryList(U_)
     ),
 
     Szz_
@@ -554,7 +575,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         ),
         mesh_,
         dimensionedScalar("Szz", dimensionSet(0, 0, -1, 0, 0, 0, 0), 0),
-        zeroGradientFvPatchScalarField::typeName
+        boundaryList(U_)
     ),
 
     d_(mesh_)
@@ -580,7 +601,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
     {
         Info<< "    Enabling negative nuTilda" << endl;
     }
-
+	
     volSymmTensorField S(symm(fvc::grad(U_)));
 
     Sxx_ = S.component(tensor::XX);
@@ -592,6 +613,16 @@ SpalartAllmarasHF::SpalartAllmarasHF
     Szx_ = S.component(tensor::ZX);
     Szy_ = S.component(tensor::ZY);
     Szz_ = S.component(tensor::ZZ);
+
+    Sxx_.correctBoundaryConditions();
+    Sxy_.correctBoundaryConditions();
+    Sxz_.correctBoundaryConditions();
+    Syx_.correctBoundaryConditions();
+    Syy_.correctBoundaryConditions();
+    Syz_.correctBoundaryConditions();
+    Szx_.correctBoundaryConditions();
+    Szy_.correctBoundaryConditions();
+    Szz_.correctBoundaryConditions();
 
     Sxx_.storePrevIter();
     Sxy_.storePrevIter();
@@ -607,7 +638,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
 
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
-
+	
 tmp<volScalarField> SpalartAllmarasHF::DnuTildaEff(const volScalarField& chi) const
 {
     volScalarField pow3chi = pow(chi, 3);
@@ -794,6 +825,16 @@ void SpalartAllmarasHF::correct()
     Szx_ = S.component(tensor::ZX);
     Szy_ = S.component(tensor::ZY);
     Szz_ = S.component(tensor::ZZ);
+
+    Sxx_.correctBoundaryConditions();
+    Sxy_.correctBoundaryConditions();
+    Sxz_.correctBoundaryConditions();
+    Syx_.correctBoundaryConditions();
+    Syy_.correctBoundaryConditions();
+    Syz_.correctBoundaryConditions();
+    Szx_.correctBoundaryConditions();
+    Szy_.correctBoundaryConditions();
+    Szz_.correctBoundaryConditions();
     
     // calculation of compressibility correction
     volScalarField compCorr
