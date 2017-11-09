@@ -593,16 +593,6 @@ SpalartAllmarasHF::SpalartAllmarasHF
     Szy_ = S.component(tensor::ZY);
     Szz_ = S.component(tensor::ZZ);
 
-    Sxx_.correctBoundaryConditions();
-    Sxy_.correctBoundaryConditions();
-    Sxz_.correctBoundaryConditions();
-    Syx_.correctBoundaryConditions();
-    Syy_.correctBoundaryConditions();
-    Syz_.correctBoundaryConditions();
-    Szx_.correctBoundaryConditions();
-    Szy_.correctBoundaryConditions();
-    Szz_.correctBoundaryConditions();
-
     Sxx_.storePrevIter();
     Sxy_.storePrevIter();
     Sxz_.storePrevIter();
@@ -804,16 +794,6 @@ void SpalartAllmarasHF::correct()
     Szx_ = S.component(tensor::ZX);
     Szy_ = S.component(tensor::ZY);
     Szz_ = S.component(tensor::ZZ);
-
-    Sxx_.correctBoundaryConditions();
-    Sxy_.correctBoundaryConditions();
-    Sxz_.correctBoundaryConditions();
-    Syx_.correctBoundaryConditions();
-    Syy_.correctBoundaryConditions();
-    Syz_.correctBoundaryConditions();
-    Szx_.correctBoundaryConditions();
-    Szy_.correctBoundaryConditions();
-    Szz_.correctBoundaryConditions();
     
     // calculation of compressibility correction
     volScalarField compCorr
