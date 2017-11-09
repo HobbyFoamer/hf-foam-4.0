@@ -428,7 +428,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         (
             "Sxx",
             runTime_.timeName(),
-            mesh_,
+            U_.db(),
             IOobject::NO_READ,
             IOobject::NO_WRITE
         ),
@@ -443,7 +443,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         (
             "Sxy",
             runTime_.timeName(),
-            mesh_,
+            U_.db(),
             IOobject::NO_READ,
             IOobject::NO_WRITE
         ),
@@ -458,7 +458,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         (
             "Sxz",
             runTime_.timeName(),
-            mesh_,
+            U_.db(),
             IOobject::NO_READ,
             IOobject::NO_WRITE
         ),
@@ -473,7 +473,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         (
             "Syx",
             runTime_.timeName(),
-            mesh_,
+            U_.db(),
             IOobject::NO_READ,
             IOobject::NO_WRITE
         ),
@@ -488,7 +488,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         (
             "Syy",
             runTime_.timeName(),
-            mesh_,
+            U_.db(),
             IOobject::NO_READ,
             IOobject::NO_WRITE
         ),
@@ -503,7 +503,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         (
             "Syz",
             runTime_.timeName(),
-            mesh_,
+            U_.db(),
             IOobject::NO_READ,
             IOobject::NO_WRITE
         ),
@@ -518,7 +518,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         (
             "Szx",
             runTime_.timeName(),
-            mesh_,
+            U_.db(),
             IOobject::NO_READ,
             IOobject::NO_WRITE
         ),
@@ -533,7 +533,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         (
             "Szy",
             runTime_.timeName(),
-            mesh_,
+            U_.db(),
             IOobject::NO_READ,
             IOobject::NO_WRITE
         ),
@@ -548,7 +548,7 @@ SpalartAllmarasHF::SpalartAllmarasHF
         (
             "Szz",
             runTime_.timeName(),
-            mesh_,
+            U_.db(),
             IOobject::NO_READ,
             IOobject::NO_WRITE
         ),
@@ -580,6 +580,39 @@ SpalartAllmarasHF::SpalartAllmarasHF
     {
         Info<< "    Enabling negative nuTilda" << endl;
     }
+
+    volSymmTensorField S(symm(fvc::grad(U_)));
+
+    Sxx_ = S.component(tensor::XX);
+    Sxy_ = S.component(tensor::XY);
+    Sxz_ = S.component(tensor::XZ);
+    Syx_ = S.component(tensor::YX);
+    Syy_ = S.component(tensor::YY);
+    Syz_ = S.component(tensor::YZ);
+    Szx_ = S.component(tensor::ZX);
+    Szy_ = S.component(tensor::ZY);
+    Szz_ = S.component(tensor::ZZ);
+
+    Sxx_.correctBoundaryConditions();
+    Sxy_.correctBoundaryConditions();
+    Sxz_.correctBoundaryConditions();
+    Syx_.correctBoundaryConditions();
+    Syy_.correctBoundaryConditions();
+    Syz_.correctBoundaryConditions();
+    Szx_.correctBoundaryConditions();
+    Szy_.correctBoundaryConditions();
+    Szz_.correctBoundaryConditions();
+
+    Sxx_.storePrevIter();
+    Sxy_.storePrevIter();
+    Sxz_.storePrevIter();
+    Syx_.storePrevIter();
+    Syy_.storePrevIter();
+    Syz_.storePrevIter();
+    Szx_.storePrevIter();
+    Szy_.storePrevIter();
+    Szz_.storePrevIter();
+    nuTilda_.storePrevIter();
 }
 
 
@@ -771,6 +804,16 @@ void SpalartAllmarasHF::correct()
     Szx_ = S.component(tensor::ZX);
     Szy_ = S.component(tensor::ZY);
     Szz_ = S.component(tensor::ZZ);
+
+    Sxx_.correctBoundaryConditions();
+    Sxy_.correctBoundaryConditions();
+    Sxz_.correctBoundaryConditions();
+    Syx_.correctBoundaryConditions();
+    Syy_.correctBoundaryConditions();
+    Syz_.correctBoundaryConditions();
+    Szx_.correctBoundaryConditions();
+    Szy_.correctBoundaryConditions();
+    Szz_.correctBoundaryConditions();
     
     // calculation of compressibility correction
     volScalarField compCorr
