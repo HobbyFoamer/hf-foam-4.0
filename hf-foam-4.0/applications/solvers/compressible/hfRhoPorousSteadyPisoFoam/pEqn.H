@@ -1,4 +1,6 @@
 {
+rho = thermo.rho();
+    
 if (pressureImplicitPorosity)
 {
     U = trTU()&UEqn().H();
