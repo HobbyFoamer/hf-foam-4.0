@@ -39,14 +39,13 @@ int main(int argc, char *argv[])
         // Pressure-velocity SIMPLE corrector
         {
             #include "UEqn.H"
+            #include "hEqn.H"
 			
             int nCorrMax = 2;
             for(int nCorr = 0; nCorr < nCorrMax; nCorr++)
             {
                 #include "pEqn.H"
             }
-			
-            #include "hEqn.H"
 			
 			UEqn.clear();
         }
